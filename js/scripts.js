@@ -1,13 +1,35 @@
-var countiesLayer;
+var countiesLayer,
+	richer = "#122A62",
+	poorer = "#7A8192";
+
+
+function pickColor(income){
+	console.log(income);
+	return 	income > 100000 ? '#122A62' :
+			income > 85000 ? '#263B6B' :
+			income > 70000 ? '#3B4C75' :
+			income > 55000 ? '#505E7E' :
+			income > 40000 ? '#656F88' :
+							'#7A8192';
+			
+}
+
+function commaSeparateNumber(val){
+	while (/(\d+)(\d{3})/.test(val.toString())){
+		val = val.toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');
+	}
+	return val;
+}
 
 $(window).load(function(){
 
 	// Country-wide map
 	var countryMap = new L.Map('countryMap', {
 		center: [39.828328, -98.579416],
-		zoom: 4
+		zoom: 4,
+		zoomControl:false
 	});
-		
+	
 	cartodb.createLayer(countryMap, "http://arm5077.cartodb.com/api/v2/viz/467b386c-7d59-11e4-9dfa-0e9d821ea90d/viz.json")
 		.addTo(countryMap)
 		.on('done', function(layer) {
@@ -28,17 +50,26 @@ $(window).load(function(){
 		zoomControl: false
 	});
 	
-	//dcMap.addLayer(new L.StamenTileLayer("toner-lines", { opacity: .5 }))
+	dcMap.addLayer(new L.StamenTileLayer("toner-lite", { opacity: .7 }))
+	
+	L.control.zoom( {
+		position: "bottomright"
+	}).addTo(dcMap);
+	
 	
 	L.geoJson(dcTracts, {
-		style: {
-			"weight": 1
-		},
+		style: function(feature){ 
+				return { 
+					fillColor: pickColor(feature.properties["ACS_13_5YR_S1903_with_ann_Median income (dollars); Estimate; Households"]),
+					fillOpacity: .7,
+					weight: 1,
+					color: "white"
+				} 
+			},
 		onEachFeature: function(feature, layer){
+			var income = feature.properties["ACS_13_5YR_S1903_with_ann_Median income (dollars); Estimate; Households"]
 			layer.on({
 				click: function(e){
-					income = feature.properties["ACS_13_5YR_S1903_with_ann_Median income (dollars); Estimate; Households"];
-					console.log(income);
 					countiesLayer.getSubLayer(0).set({
 						cartocss: " \
 							#export [ acs_13_5_4 >= " + income + "] { polygon-fill: #122A62; } \
@@ -46,8 +77,22 @@ $(window).load(function(){
 							"
 							
 					});
-				}
+				},
+				mousemove: function(e){
+					console.log(e);
+					$("#money").children("h1").html("$" + commaSeparateNumber(income))
+					$("#money").addClass("show")
+						.css({
+							top: e.originalEvent.clientY - $("#money").outerHeight(),
+							left: e.originalEvent.clientX - $("#money").outerWidth()
+						})
+					
+				},
+				mouseout: function(e){
+					$("#money").removeClass("show");
+				},
 			});
 		}
 	}).addTo(dcMap);
 });
+
