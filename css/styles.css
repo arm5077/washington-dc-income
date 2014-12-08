@@ -68,8 +68,35 @@ html, body {
 		margin:0;
 		padding:0;
 		line-height:1em;
+		display:inline-block;
+		float:left;
 	}
 		.header h1 small{
 			font-size:12pt;
 			font-weight:400;
 		}
+		
+		.header .legend {
+			display:inline-block;
+			float:left;
+			margin-left:15px;
+		}
+		
+			.header .legend .legendItem {
+				display:inline;
+				float:right;
+				margin-right:10px; 
+			}
+			
+				.header .legend .legendItem .square {
+					content: " ";
+					display:inline-block;
+					height: 13px;
+					width:13px;
+					background-color:red;
+					margin-right:5px;
+				}
+				
+					#poorer {
+						
+					}
