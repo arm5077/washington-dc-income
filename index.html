@@ -2,32 +2,55 @@
 <html>
 <head>
 	<title>How rich is Washington, D.C.?</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<meta property="og:type"            content="website" /> 
+	<meta property="og:url"             content="http://andrewmcgill.me/how-rich-is-washington-dc-map"/>  
+	<meta property="og:title"           content="How Washington, D.C. is simultaneously richer and poorer than the rest of America" /> 
+	<meta property="og:description"     content="Washington has some of the nation's richest and poorest neighborhoods. This map compares median household income in DC census tracts to the rest of the country." /> 
+
+	<meta name="twitter:card" 			content="summary">
+	<meta name="twitter:site" 			content="@andrewmcgill">
+	<meta name="twitter:creator"		content="@andrewmcgill">
+	<meta name="twitter:title"			content="How Washington, D.C. is both richer and poorer than the rest of America. ">
+	<meta name="twitter:description"	content="Washington has some of the nation's richest and poorest neighborhoods. This map compares median household income in DC census tracts to the rest of the country.">
+	<!--<meta name="twitter:image" 			content="img/WheelerFam01.jpg">	-->
+	
+	<!-- jQuery -->
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	
+	<!-- CartoDB -->
 	<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
 	<script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
 	
-	<script type="text/javascript" src="data/dc-tracts-with-income.geojson"></script>
-	
+	<!-- Stamen map -->
 	<script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
 	
+	<!-- FontAwesome icons -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	
+	<!-- Da data -->
+	<script type="text/javascript" src="data/dc-tracts-with-income.geojson"></script>
+	
+	<!-- My css and js -->
 	<script type="text/javascript" src="js/scripts.js"></script>
 	<link href='css/styles.css' rel='stylesheet' type='text/css' />
 	
 </head>
 <body>
 	<div class="header">
-		<h1>Just how rich is Washington, D.C? <small>Click a DC census tract to see how many U.S. counties have a higher or lower median income.</small></h1>
-		<div class="legend">
-			<div class="legendItem" id="richer"><div class = "square"></div>Richer</div> 
-			<div class="legendItem" id="poorer"><div class = "square"></div>Poorer</div> 
-			
+		<h1>Just how rich is Washington, D.C? <small>Click a DC census tract to see how many U.S. towns have a higher or lower median income.</small></h1>
+		<div class="social">
+			<a href="https://www.facebook.com/sharer/sharer.php?u=http://www.andrewmcgill.me/how-rich-is-washington-dc-map" target="_blank"><i class="fa fa-facebook"></i></a>
+			<a href="https://twitter.com/intent/tweet?original_referer=http://www.andrewmcgill.me/how-rich-is-washington-dc-map&text=This map shows how Washington is both one of the richest and the poorest cities in the U.S.:&:tw_p=tweetbutton&url=http://www.andrewmcgill.me/how-rich-is-washington-dc-map" target="_blank"><i class="fa fa-twitter"></i></a>
+			<a href="https://github.com/arm5077/washington-dc-income" target="_blank"><i class="fa fa-github"></i></a>
 		</div>
 	</div>
 	<div id="countryMap"></div>
 	<div id="dcMap"></div>
 	<div id = "money">
-		<h2>Median income</h2>
+		<h2></h2>
 		<h1></h1>
 	</div>
 </body>
