@@ -1,14 +1,15 @@
 var countiesLayer,
 	richer = "#FFEA32",
-	poorer = "#5672b4";
+	poorer = "#5672b4",
+	clickedTarget = false;
 	//richer = "#122A62",
 	//poorer = "#7A8192";
 
 
 function getOpacity(income){
-	return 	income > 63000 ? '1' :
-			income > 0 ? '.3' :
-							'.3';
+	return 	income > 63000 ? '.3' :
+			income > 0 ? '.9' :
+							'.9';
 			
 }
 
@@ -28,6 +29,8 @@ $(window).load(function(){
 	var countryMap = new L.Map('countryMap', {
 		center: [39.828328, -98.579416],
 		zoom: 4,
+		minZoom:3,
+		maxBounds: [[10.594189,-138.121094], [58.998256,-48.306641]],
 		attributionControl: false,
 		zoomControl:false
 	});
@@ -46,6 +49,13 @@ $(window).load(function(){
 				cartocss: "#export [ median_income >= 67572] { polygon-opacity: 1; polygon-fill: " + richer + "; } \
 							#export { polygon-opacity: 0; polygon-fill: " + poorer + "; }"
 			});
+			countiesLayer.on("loading", function(){
+				$(".loader").addClass("show");
+			})
+			.on("load", function(){
+				$(".loader").removeClass("show");
+			});
+			
 		}).on('error', function() {
 			console.log("Whoooooops error.");
 		});
@@ -59,13 +69,15 @@ $(window).load(function(){
 	var dcMap = new L.map('dcMap',{
 		center: [38.907192,-77.036871],
 		zoom:11,
+		minZoom: 10,
+		maxBounds: [[38.75927,-77.167282],[39.063815,-76.858292]],
 		attributionControl: false,
 		zoomControl: false
 	});
 	
 	
-	L.tileLayer('http://{s}.tiles.mapbox.com/v3/arm5077.kehf3hpe/{z}/{x}/{y}.png', {}
-	).addTo(dcMap);
+	L.tileLayer('http://{s}.tiles.mapbox.com/v3/arm5077.kei5c7hn/{z}/{x}/{y}.png', {}
+	).addTo(dcMap);	
 	
 	dcMap.fitBounds([ [38.808597,-77.112694], [38.982281,-76.905152] ]);
 	
@@ -73,16 +85,17 @@ $(window).load(function(){
 		position: "bottomright"
 	}).addTo(dcMap);
 	
-	
-	L.geoJson(dcTracts.features, {
+	var geojson;
+	geojson = L.geoJson(dcTracts.features, {
 		style: function(feature){ 
 				return { 
 					//fillColor: pickColor(feature.properties["ACS_13_5_4"]),
-					fillColor: "#F7E438",
-					fillOpacity: getOpacity(feature.properties["ACS_13_5_4"]),
-					color: "black",
-					opacity: 1,
-					weight: 1,
+					//fillColor: "#F7E438",
+					//fillOpacity: getOpacity(feature.properties["ACS_13_5_4"]),
+					color: "#F7E438",
+					opacity: 0,
+					weight: 3,
+					dashArray: "5,5"
 				} 
 			},
 		onEachFeature: function(feature, layer){
@@ -95,13 +108,23 @@ $(window).load(function(){
 							#export { polygon-opacity: 0; } \
 							"
 							
+					}).on("done", function(){console.log("load");});
+					if(clickedTarget) geojson.resetStyle(clickedTarget)
+					clickedTarget = e.target;
+					e.target.setStyle({
+						opacity: .99,
+						dashArray: "0"
 					});
 				},
 				dblclick: function(e) {map.setView(e.latlng, dcMap.getZoom() + 1);},
 				mousemove: function(e){
-					
+					if( e.target != clickedTarget ){
+						e.target.setStyle({
+							opacity: .99
+						});
+					}
 					$("#money").children("h1").html("$" + commaSeparateNumber(income))
-					$("#money").children("h2").html(feature.properties.subhood)
+					$("#money").children("h2").html(feature.properties.WEB_URL)
 					$("#money").addClass("show")
 						.css({
 							top: e.originalEvent.clientY - $("#money").outerHeight(),
@@ -110,6 +133,9 @@ $(window).load(function(){
 					
 				},
 				mouseout: function(e){
+					if( e.target != clickedTarget){
+						geojson.resetStyle(e.target);
+					}
 					$("#money").removeClass("show");
 				},
 			});

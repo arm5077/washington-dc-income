@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype html> 
 <html>
 <head>
 	<title>How rich is Washington, D.C.?</title>
@@ -6,15 +6,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<meta property="og:type"            content="website" /> 
-	<meta property="og:url"             content="http://andrewmcgill.me/how-rich-is-washington-dc-map"/>  
+	<meta property="og:url"             content="http://andrewmcgill.me/how-rich-is-washington-dc-map/" />  
 	<meta property="og:title"           content="How Washington, D.C. is simultaneously richer and poorer than the rest of America" /> 
-	<meta property="og:description"     content="Washington has some of the nation's richest and poorest neighborhoods. This map compares median household income in DC census tracts to the rest of the country." /> 
+	<meta property="og:description"     content="The U.S. capital has some of the richest and poorest neighborhoods in America. This map shows how its median household income compares to your hometown's." /> 
+	<meta property="og:image"     content="http://andrewmcgill.me/how-rich-is-washington-dc-map/img/washington_v_usa.jpg" /> 
 
 	<meta name="twitter:card" 			content="summary">
 	<meta name="twitter:site" 			content="@andrewmcgill">
 	<meta name="twitter:creator"		content="@andrewmcgill">
-	<meta name="twitter:title"			content="How Washington, D.C. is both richer and poorer than the rest of America. ">
-	<meta name="twitter:description"	content="Washington has some of the nation's richest and poorest neighborhoods. This map compares median household income in DC census tracts to the rest of the country.">
+	<meta name="twitter:title"			content="How Washington is both richer and poorer than the rest of us">
+	<meta name="twitter:description"	content="The U.S. capital has some of the richest and poorest neighborhoods in America. This map shows how its median household income compares to your hometown's.">
+	<meta name="twitter:image"	content="http://andrewmcgill.me/how-rich-is-washington-dc-map/img/washington_v_usa.jpg">
 	<!--<meta name="twitter:image" 			content="img/WheelerFam01.jpg">	-->
 	
 	<!-- jQuery -->
@@ -40,12 +42,15 @@
 </head>
 <body>
 	<div class="header">
-		<h1>Just how rich is Washington, D.C? <small>Click a DC census tract to see how many U.S. towns have a higher or lower median income.</small></h1>
+		<h1>Just how rich is Washington, D.C? &nbsp;<small>Click a DC census tract to see how many (or how few) U.S. towns have an equal or higher median household income.</small></h1>
 		<div class="social">
 			<a href="https://www.facebook.com/sharer/sharer.php?u=http://www.andrewmcgill.me/how-rich-is-washington-dc-map" target="_blank"><i class="fa fa-facebook"></i></a>
 			<a href="https://twitter.com/intent/tweet?original_referer=http://www.andrewmcgill.me/how-rich-is-washington-dc-map&text=This map shows how Washington is both one of the richest and the poorest cities in the U.S.:&:tw_p=tweetbutton&url=http://www.andrewmcgill.me/how-rich-is-washington-dc-map" target="_blank"><i class="fa fa-twitter"></i></a>
 			<a href="https://github.com/arm5077/washington-dc-income" target="_blank"><i class="fa fa-github"></i></a>
 		</div>
+	</div>
+	<div class="loader">
+		<i class="fa fa-cog fa-spin"></i>
 	</div>
 	<div id="countryMap"></div>
 	<div id="dcMap"></div>

@@ -8,13 +8,35 @@ html, body {
 	font-family:"Roboto Condensed", sans-serif;
 }
 
-#countryMap {
+#countryMap, .loader {
 	width:66%;
 	height:100%;
 	position:fixed;
 	top:0;
 	left:0;
 }
+
+	.loader {
+		z-index:3;
+		background-color:rgba(0,0,0,.2);
+		font-size:100pt;
+		text-align:center;
+		color:gray;
+		display:none;
+	}
+	
+		.loader.show{
+			display:block;
+		}
+	
+		.loader .fa-cog
+		{
+			opacity:.5;
+			position:relative;
+			top:40%;
+		}
+	
+		
 
 #dcMap {
 	position:fixed;
