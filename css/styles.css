@@ -145,7 +145,7 @@ html, body {
 		height:18%;
 	}
 	
-	#dcMap{
+	#dcMap, .loader{
 		top:18%;
 		left:0;
 		width:100%;
